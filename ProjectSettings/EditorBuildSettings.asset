@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/MainMenu/MainMenu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/MainScene/MainScene.unity
+    path: Assets/ListMenu/ListMenu.unity
     guid: b80c1185976679745accfcdf12614aab
+  - enabled: 1
+    path: Assets/MainScene/MainScene.unity
+    guid: 0e1d38e5b37bccf4ab14fb3dc495163b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -1,15 +1,11 @@
 using Newtonsoft.Json;
-using NUnit.Framework;
-using System;
+using Shared.Models;
 using System.Collections.Generic;
 using System.Net.Http;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
-namespace MainScene
+namespace ListMenu
 {
     public class FetchRoulettes : MonoBehaviour
     {
@@ -19,16 +15,17 @@ namespace MainScene
         public void Start()
         {
             Debug.Log(Shared.Context.Username);
-            List<RouletteRecord> records = Fetch();
+            List<RouletteWithoutItems> records = Fetch();
 
             int currY = 100;
 
-            foreach (RouletteRecord entry in records)
+            foreach (RouletteWithoutItems entry in records)
             {
                 GameObject button = Instantiate(listButtonPrefab, transform);
                 button.GetComponentInChildren<TMPro.TMP_Text>().text = entry.name;
                 button.GetComponent<Button>().onClick.AddListener(() => {
-                    Debug.Log($"Roulette id = {entry.Id} clicked!");
+                    Shared.Context.SelectedRouletteId = entry.Id;
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
                 });
 
                 button.transform.localPosition = new Vector3(40, currY, 0);
@@ -38,30 +35,21 @@ namespace MainScene
             }
         }
 
-        private List<RouletteRecord> Fetch()
+        private List<RouletteWithoutItems> Fetch()
         {
             try
             {
                 HttpClient client = new HttpClient();
-                string response = client.GetStringAsync($"{StateManager.GetInstance().BASE_API_URL}/Roulettes").Result;
-                Debug.Log($"Response: {response}");
+                string response = client.GetStringAsync($"{Shared.Context.BASE_API_URL}/Roulettes").Result;
 
-                // Parse JSON
-                List<RouletteRecord> records = JsonConvert.DeserializeObject<List<RouletteRecord>>(response);
+                List<RouletteWithoutItems> records = JsonConvert.DeserializeObject<List<RouletteWithoutItems>>(response);
                 return records;
             }
             catch (HttpRequestException e)
             {
                 Debug.LogError($"Request error: {e.Message}");
-                return new List<RouletteRecord>();
+                return new List<RouletteWithoutItems>();
             }
         }
-    }
-
-    [System.Serializable]
-    class RouletteRecord
-    {
-        public int Id;
-        public string name;
     }
 }

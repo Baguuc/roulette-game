@@ -1,11 +1,10 @@
 using UnityEngine;
 
-namespace MainScene
+namespace ListMenu
 {
     public class StateManager : MonoBehaviour
     {
         private static StateManager INSTANCE;
-        public string BASE_API_URL;
 
         public static StateManager GetInstance()
         {

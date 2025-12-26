@@ -15,7 +15,7 @@ namespace MainMenu
             }
             else
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("ListMenu");
             }
         }
     }
