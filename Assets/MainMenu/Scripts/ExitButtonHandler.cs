@@ -1,3 +1,4 @@
+using Shared;
 using UnityEngine;
 
 namespace MainMenu
@@ -6,7 +7,7 @@ namespace MainMenu
     {
         public void HandleClick()
         {
-            Application.Quit();
+            Utils.Exit();
         }
     }
 }

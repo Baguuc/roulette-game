@@ -1,3 +1,4 @@
+using Shared;
 using UnityEngine;
 
 namespace MainMenu
@@ -6,12 +7,13 @@ namespace MainMenu
     {
         public void HandleClick()
         {
-            StateManager stateManager = StateManager.GetInstance();
+            Core core = Core.GetInstance();
 
-            if (Shared.Context.Username.Length == 0)
+            // nazwa u¿ytkownika nie zosta³a wprowadzona a nie mo¿e byæ pusta
+            // wiêc poinformuj u¿ytkownika przez zmianê koloru pola na czerwony
+            if (Context.Username.Length == 0)
             {
-                Color initialColor = stateManager.usernameInputField.image.color;
-                stateManager.usernameInputField.image.color = Color.red;
+                core.ToggleUsernameInputAlert(true);
             }
             else
             {

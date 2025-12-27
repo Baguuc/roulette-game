@@ -1703,8 +1703,8 @@ GameObject:
   - component: {fileID: 1637874261}
   - component: {fileID: 1637874262}
   m_Layer: 0
-  m_Name: UIManager
-  m_TagString: UIManager
+  m_Name: LevelManager
+  m_TagString: LevelManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1769,9 +1769,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1637874257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11005bf26c213e54db9e17b67a4c9632, type: 3}
+  m_Script: {fileID: 11500000, guid: 2903eb6b72abc424ebb0298ba49a0908, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenu.Core
   usernameInputField: {fileID: 200861142}
   startButton: {fileID: 968877430}
   exitButton: {fileID: 1018206436}
