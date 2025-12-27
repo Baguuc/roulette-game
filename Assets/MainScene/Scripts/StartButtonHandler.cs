@@ -16,7 +16,7 @@ namespace MainScene
         /// <summary>
         /// Handler kliknięcia przycisku Start, wysyła żądanie POST do endpointu Rewards i uruchamia animację losowania nagrody.
         /// </summary>
-        public void OnClick()
+        public void HandleClick()
         {
             if (Context.CurrentItemPool == null || Context.CurrentItemPool.Count < 5)
             {

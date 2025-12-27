@@ -10,8 +10,8 @@ namespace Shared
 
         // globalny stan aplikacji
         public static string Username = null;
-        public static List<RouletteWithoutItems> RouletteList = new List<RouletteWithoutItems>();
+        public static List<RouletteWithoutItems> RouletteList = null;
         public static int? SelectedRouletteId = null;
-        public static List<Item> CurrentItemPool = new List<Item>();
+        public static List<Item> CurrentItemPool = null;
     }
 }

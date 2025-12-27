@@ -14,8 +14,14 @@ namespace ListMenu
 
         public void Start()
         {
-            List<RouletteWithoutItems> records = FetchRouletteList();
-            Context.RouletteList = records;
+            // pobierz liste ruletek tylko jesli nie byla jeszcze pobrana
+            // jesli byla to znaczy ze uzytkownik wrocil do listy z MainScene i zacacheowana lista 
+            // nadal moze byc uzyta
+            if (Context.RouletteList == null)
+            {
+                List<RouletteWithoutItems> records = FetchRouletteList();
+                Context.RouletteList = records;
+            }
 
             core.RenderRouletteList();
         }
@@ -25,7 +31,7 @@ namespace ListMenu
             try
             {
                 HttpClient client = new HttpClient();
-                string response = client.GetStringAsync($"{Shared.Context.BASE_API_URL}/Roulettes").Result;
+                string response = client.GetStringAsync($"{Context.BASE_API_URL}/Roulettes").Result;
 
                 List<RouletteWithoutItems> records = JsonConvert.DeserializeObject<List<RouletteWithoutItems>>(response);
                 return records;
