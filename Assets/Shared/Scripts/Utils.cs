@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Shared
 {
-    public class Utils
+    public static class Utils
     {
         public static T WeightedPick<T>(IEnumerable<T> seq, Random random) where T : IWeightedItem
         {
@@ -48,6 +48,22 @@ namespace Shared
         public interface IWeightedItem
         {
             public int Value { get; set; }
+        }
+
+        public static List<T> Shuffle<T>(this Random rng, IEnumerable<T> collection)
+        {
+            T[] copy = collection.ToArray().Clone() as T[];
+
+            int n = copy.Length;
+            while (n > 1)
+            {
+                int k = rng.Next(n--);
+                T temp = copy[n];
+                copy[n] = copy[k];
+                copy[k] = temp;
+            }
+
+            return copy.ToList();
         }
     }
 }

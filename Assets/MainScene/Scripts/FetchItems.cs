@@ -1,6 +1,8 @@
 using Newtonsoft.Json;
+using Shared;
 using Shared.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using TMPro;
 using UnityEngine;
@@ -29,14 +31,18 @@ namespace MainScene
             }
 
             List<Item> roulettePool = new List<Item>();
-            for(int i = 0; i < record.items.Count * 2; i++)
+            int i = record.items.Count;
+            foreach (Item item in record.items.OrderBy(item => item.Value))
             {
-                Item item = Shared.Utils.WeightedPick(record.items, random);
-                roulettePool.Add(item);
+                for(int j = 0; j < i; j++)
+                {
+                    roulettePool.Add(item);
+                }
+
+                i--;
             }
 
-            Shared.Context.CurrentItemPool = roulettePool;
-
+            Shared.Context.CurrentItemPool = random.Shuffle<Item>(roulettePool);
             Utils.RenderCurrentItemPool(panelTextContainers);
         }
 

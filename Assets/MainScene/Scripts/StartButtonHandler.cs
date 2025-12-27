@@ -17,7 +17,6 @@ namespace MainScene
         {
             if (Shared.Context.CurrentItemPool == null || Shared.Context.CurrentItemPool.Count < 5)
             {
-                Debug.LogError("Item pool has too little items!");
                 return;
             }
 
@@ -36,8 +35,6 @@ namespace MainScene
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
                 var response = client.PostAsync($"{Shared.Context.BASE_API_URL}/Rewards", content).Result;
-                Debug.Log($"Response status code: {response.StatusCode}.");
-                Debug.Log(JsonConvert.SerializeObject(response));
 
                 string responseBody = response.Content.ReadAsStringAsync().Result;
 
@@ -54,7 +51,6 @@ namespace MainScene
         IEnumerator Roll()
         {
             GeneratedReward reward = RollAReward();
-            Debug.Log(JsonConvert.SerializeObject(reward));
 
             // obróæ siê w pe³ni 2 razy (wykonaj <iloœæ wejœæ w currentItemPool> przesuniêæ) dla imitacji losowoœci
             for (int i = 0; i < Shared.Context.CurrentItemPool.Count * 2; i++)
@@ -69,6 +65,7 @@ namespace MainScene
             while (Shared.Context.CurrentItemPool[2].id != reward.itemId)
             {
                 Utils.RotateCurrentItemPool();
+                Utils.RenderCurrentItemPool(panelTextContainers);
 
                 yield return new WaitForSeconds(0.1f);
             }
