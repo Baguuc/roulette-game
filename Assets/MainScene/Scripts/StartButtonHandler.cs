@@ -1,11 +1,9 @@
-using Newtonsoft.Json;
+ï»¿using Newtonsoft.Json;
 using Shared;
 using Shared.Models;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Net.Http;
-using TMPro;
 using UnityEngine;
 
 namespace MainScene
@@ -16,7 +14,7 @@ namespace MainScene
         private Core core => Core.GetInstance();
         
         /// <summary>
-        /// Handler klikniêcia przycisku Start, wysy³a ¿¹danie POST do endpointu Rewards i uruchamia animacjê losowania nagrody.
+        /// Handler klikniÄ™cia przycisku Start, wysyÅ‚a Å¼Ä…danie POST do endpointu Rewards i uruchamia animacjÄ™ losowania nagrody.
         /// </summary>
         public void OnClick()
         {
@@ -30,30 +28,33 @@ namespace MainScene
         }
 
         /// <summary>
-        /// Wywo³uje animacjê losowania nagrody dla wygenerowanej nagrody. (Do u¿ytku z StartCoroutine)
+        /// WywoÅ‚uje animacjÄ™ losowania nagrody dla wygenerowanej nagrody. (Do uÅ¼ytku z StartCoroutine)
         /// </summary>
-        /// <param name="forReward">wygenerowana nagroda na której ruletka ma siê zatrzymaæ</param>
+        /// <param name="forReward">wygenerowana nagroda na ktÃ³rej ruletka ma siÄ™ zatrzymaÄ‡</param>
         private IEnumerator RollingAnimation(GeneratedReward forReward)
         {
-            // obróæ siê w pe³ni 2 razy (wykonaj <iloœæ wejœæ w currentItemPool> przesuniêæ) dla imitacji losowoœci
+            core.ClearRewardIndicatorLabel();
+            // obrÃ³Ä‡ siÄ™ w peÅ‚ni 2 razy (wykonaj <iloÅ›Ä‡ wejÅ›Ä‡ w currentItemPool> przesuniÄ™Ä‡) dla imitacji losowoÅ›ci
             for (int i = 0; i < Context.CurrentItemPool.Count * 2; i++)
             {
                 core.RotateRoulette(); 
                 yield return new WaitForSeconds(0.1f);
             }
 
-            // dopóki wylosowany element nie jest na œrodku ekranu, przesuwaj elementy
+            // dopÃ³ki wylosowany element nie jest na Å›rodku ekranu, przesuwaj elementy
             while (Context.CurrentItemPool[2].id != forReward.itemId)
             { 
                 core.RotateRoulette(); 
                 yield return new WaitForSeconds(0.1f);
             }
+
+            core.SetRewardIndicatorLabel($"Twoja nagroda: {forReward.item.name}!");
         }
 
         /// <summary>
-        /// Wysy³a ¿¹danie POST do endpointu Rewards w celu wygenerowania nagrody, je¿eli nie mo¿e wys³aæ zapytania, zamyka aplikacjê.
+        /// WysyÅ‚a Å¼Ä…danie POST do endpointu Rewards w celu wygenerowania nagrody, jeÅ¼eli nie moÅ¼e wysÅ‚aÄ‡ zapytania, zamyka aplikacjÄ™.
         /// </summary>
-        /// <returns>Wygenerowan¹ nagrodê</returns>
+        /// <returns>WygenerowanÄ… nagrodÄ™</returns>
         private GeneratedReward PostReward()
         {
             try
@@ -85,7 +86,7 @@ namespace MainScene
                 Debug.LogError($"Request error: {e.Message}");
                 Utils.Exit();
 
-                // nie powinno siê nigdy zdarzyæ, poniewa¿ Utils.Exit() zamyka aplikacjê, to jest tylko dla kompilatora
+                // nie powinno siÄ™ nigdy zdarzyÄ‡, poniewaÅ¼ Utils.Exit() zamyka aplikacjÄ™, to jest tylko dla kompilatora
                 throw new Exception("Failed to post reward data.");
             }
         }

@@ -12,12 +12,10 @@ namespace MainScene
     {
         // referencje z edytora
         public List<TMP_Text> TextContainers;
+        public TMP_Text RewardIndicatorText;
 
         // instancja core (singleton)
         public static Core Instance;
-
-        // prywatny stan
-        private System.Random random => new System.Random();
 
         public static Core GetInstance()
         {
@@ -78,6 +76,23 @@ namespace MainScene
         {
             RotateCurrentItemPool();
             RenderCurrentItemPool();
+        }
+
+        /// <summary>
+        /// Ustawia etykietê wskaŸnika nagrody.
+        /// </summary>
+        /// <param name="label"></param>
+        public void SetRewardIndicatorLabel(string label)
+        {
+            RewardIndicatorText.text = label;
+        }
+
+        /// <summary>
+        /// Ustawia pust¹ etykietê wskaŸnika nagrody.
+        /// </summary>
+        public void ClearRewardIndicatorLabel()
+        {
+            RewardIndicatorText.text = "";
         }
     }
 }
