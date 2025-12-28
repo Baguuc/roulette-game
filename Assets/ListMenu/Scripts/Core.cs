@@ -1,6 +1,8 @@
 using Shared;
 using Shared.Models;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ListMenu
@@ -27,21 +29,41 @@ namespace ListMenu
 
         public void RenderRouletteList()
         {
-            int currY = 100;
+            int currY = -100;
             foreach (RouletteWithoutItems entry in Context.RouletteList)
             {
-                GameObject button = Instantiate(listButtonPrefab, transform);
-                button.GetComponentInChildren<TMPro.TMP_Text>().text = entry.name;
-                button.GetComponent<Button>().onClick.AddListener(() => {
-                    Context.SelectedRouletteId = entry.Id;
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
-                });
+                GameObject button = CreateListButton(
+                    entry.name,
+                    () => {
+                        Context.SelectedRouletteId = entry.Id;
+                        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+                    }
+                );
 
-                button.transform.localPosition = new Vector3(40, currY, 0);
+                // pozycja
+                button.transform.localPosition = new Vector2(-510, currY);
                 button.transform.SetParent(canvas.transform, true);
 
-                currY -= 60;
+                currY -= 105;
             }
+        }
+
+        private GameObject CreateListButton(string label, UnityAction clickHandler)
+        {
+            GameObject button = Instantiate(listButtonPrefab, transform);
+
+            // styl przycisku
+            button.GetComponentInChildren<TMP_Text>().text = label;
+            button.GetComponent<Image>().color = new Color(0.0274509803921569f, 0.0274509803921569f, 0.0274509803921569f);
+            button.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 75);
+
+            // akcja przycisku
+            button.GetComponent<Button>().onClick.AddListener(clickHandler);
+
+            // dodatkowe opcje
+            button.GetComponent<Image>().raycastTarget = false;
+
+            return button;
         }
     }
 }

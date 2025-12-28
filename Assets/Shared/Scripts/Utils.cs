@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Shared
 {
@@ -15,7 +16,7 @@ namespace Shared
             #endif
         }
 
-        public static T WeightedPick<T>(IEnumerable<T> seq, Random random) where T : IWeightedItem
+        public static T WeightedPick<T>(IEnumerable<T> seq, System.Random random) where T : IWeightedItem
         {
             T[] pool = seq.OrderBy(i => i.Value).ToArray();
             int max = pool[pool.Length - 1].Value;
@@ -59,7 +60,7 @@ namespace Shared
             public int Value { get; set; }
         }
 
-        public static List<T> Shuffle<T>(this Random rng, IEnumerable<T> collection)
+        public static List<T> Shuffle<T>(this System.Random rng, IEnumerable<T> collection)
         {
             T[] copy = collection.ToArray().Clone() as T[];
 

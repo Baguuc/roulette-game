@@ -11,7 +11,7 @@ namespace MainMenu
 
             // nazwa u¿ytkownika nie zosta³a wprowadzona a nie mo¿e byæ pusta
             // wiêc poinformuj u¿ytkownika przez zmianê koloru pola na czerwony
-            if (Context.Username.Length == 0)
+            if (Context.Username == null || Context.Username.Length == 0)
             {
                 core.ToggleUsernameInputAlert(true);
             }

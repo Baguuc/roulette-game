@@ -15,6 +15,10 @@ namespace MainMenu
 
         public void HandleSelect(string selection)
         {
+            if (TouchScreenKeyboard.isSupported)
+            {
+                TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+            }
             core.ToggleUsernameInputAlert(false);
         }
     }
